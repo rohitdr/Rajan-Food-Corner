@@ -1,21 +1,32 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaUtensils, FaBars, FaTimes } from "react-icons/fa";
+import { useStateContext } from "../Context/States";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-
+const {heroRef,menuRef,aboutRef,galleryRef,contactRef,testimonialsRef}=useStateContext()
   const links = [
-    { name: "Home", href: "#" },
-    { name: "Menu", href: "#menu" },
-    { name: "About", href: "#about" },
-    { name: "Gallery", href: "#gallery" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", ref:heroRef},
+    { name: "Menu", ref:menuRef},
+    { name: "About",ref:aboutRef},
+    { name: "Gallery",ref:galleryRef },
+    { name: "Contact",ref:contactRef },
+    { name: "Testimonials",ref:testimonialsRef },
   ];
 
+ const scrollToSection = (ref) => {
+    ref.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+    console.log("adsf")
+    if(open){
+      setOpen(false)
+    }
+  };
   return (
     <header className="fixed top-0 left-0 w-full z-50">
-      
+   
       {/* Background */}
       <div className="bg-black/70 backdrop-blur-xl border-b border-white/10">
         <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
@@ -44,15 +55,18 @@ export default function Navbar() {
               </span>
             </div>
           </motion.div>
-
+<ul>
           {/* DESKTOP LINKS */}
           <nav className="hidden md:flex items-center gap-10 text-sm text-gray-300">
             {links.map((link, i) => (
-              <motion.a
+              <motion.li
                 key={i}
-                href={link.href}
+                onClick={()=>{
+                  scrollToSection(link.ref)
+                }}
+              
                 whileHover={{ y: -2 }}
-                className="relative group transition"
+                className="relative group transition cursor-pointer"
               >
                 <span className="group-hover:text-orange-400 transition">
                   {link.name}
@@ -60,9 +74,9 @@ export default function Navbar() {
 
                 {/* underline animation */}
                 <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-orange-400 group-hover:w-full transition-all duration-300"></span>
-              </motion.a>
+              </motion.li>
             ))}
-          </nav>
+          </nav></ul>
 
           {/* CTA BUTTON */}
           <motion.a
@@ -100,14 +114,17 @@ export default function Navbar() {
               {links.map((link, i) => (
                 <motion.a
                   key={i}
-                  href={link.href}
+                
                   whileHover={{ scale: 1.1 }}
-                  onClick={() => setOpen(false)}
+                   onClick={()=>{
+                  scrollToSection(link.ref)
+                }}
                   className="hover:text-orange-400 transition"
                 >
                   {link.name}
                 </motion.a>
               ))}
+              
 
               <motion.a
                 href="#contact"

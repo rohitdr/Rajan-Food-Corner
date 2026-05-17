@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FaPhoneAlt, FaMapMarkerAlt, FaClock, FaWhatsapp } from "react-icons/fa";
+import { useStateContext } from "../Context/States";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
@@ -15,8 +16,9 @@ const fadeUp = {
 };
 
 export default function Contact() {
+   const {contactRef}=useStateContext() 
   return (
-    <section className="w-full bg-black text-white py-16 px-4 overflow-x-hidden">
+    <section className="w-full bg-black text-white py-16 px-4 overflow-x-hidden" ref={contactRef}>
 
       {/* BRAND HEADER */}
       <motion.div

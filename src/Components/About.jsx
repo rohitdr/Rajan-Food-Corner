@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { FaLeaf, FaUtensils, FaStar } from "react-icons/fa";
+import { useStateContext } from "../Context/States";
 
 export default function About() {
+   const {aboutRef}=useStateContext()
   return (
-    <section className="w-full bg-black text-white py-20 px-6">
+    <section className="w-full bg-black text-white py-20 px-6" ref={aboutRef}>
 
       {/* HEADER */}
       <motion.div

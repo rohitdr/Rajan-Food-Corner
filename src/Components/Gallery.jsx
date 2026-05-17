@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useStateContext } from "../Context/States";
 
 const fallbackImg =
   "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=1200";
@@ -31,8 +32,9 @@ const images = [
 ];
 
 export default function Gallery() {
+  const {galleryRef}=useStateContext()
   return (
-    <section className="min-h-screen w-full bg-black text-white py-20 px-6">
+    <section className="min-h-screen w-full bg-black text-white py-20 px-6" ref={galleryRef}>
 
       {/* HEADER */}
       <motion.div

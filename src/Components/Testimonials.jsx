@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useStateContext } from "../Context/States";
 
 const reviews = [
   {
@@ -22,8 +23,9 @@ const reviews = [
 ];
 
 export default function Testimonials() {
+  const {testimonialsRef}=useStateContext()
   return (
-    <section className="w-full bg-black text-white py-24 px-6">
+    <section className="w-full bg-black text-white py-24 px-6" ref={testimonialsRef}>
 
       {/* HEADER */}
       <motion.div

@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { FaUtensils, FaConciergeBell } from "react-icons/fa";
+import { useStateContext } from "../Context/States";
 
 export default function Hero() {
+  const {heroRef}=useStateContext()
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-black text-white">
+    <section className="relative h-screen w-full overflow-hidden bg-black text-white" ref={heroRef}>
 
       {/* Background */}
       <div className="absolute inset-0">
