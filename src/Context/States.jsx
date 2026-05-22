@@ -11,8 +11,9 @@ export default function States({children}) {
   const contactRef=useRef(null)
   const galleryRef=useRef(null)
   const testimonialsRef=useRef(null)
+  const [darkMode,setDarkMode]=useState(false)
   return (
-   <StateContext.Provider value={{heroRef,menuRef,aboutRef,contactRef,galleryRef,testimonialsRef}}>
+   <StateContext.Provider value={{heroRef,menuRef,aboutRef,contactRef,galleryRef,testimonialsRef,darkMode,setDarkMode}}>
     {children}
    </StateContext.Provider>
   )

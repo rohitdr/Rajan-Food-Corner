@@ -3,9 +3,30 @@ import { FaLeaf, FaUtensils, FaStar } from "react-icons/fa";
 import { useStateContext } from "../Context/States";
 
 export default function About() {
-   const {aboutRef}=useStateContext()
+  const { aboutRef, darkMode,menuRef,contactRef } = useStateContext();
+ const scrollToMenu = () => {
+    menuRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+
+  
+  };
+ const scrollToContactUs = () => {
+    contactRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+
+  
+  };
   return (
-    <section className="w-full bg-black text-white py-20 px-6" ref={aboutRef}>
+    <section
+      className={`w-full py-20 px-6 transition-all duration-500 ${
+        darkMode
+          ? "bg-black text-white"
+          : "bg-white text-black"
+      }`}
+      ref={aboutRef}
+    >
 
       {/* HEADER */}
       <motion.div
@@ -15,9 +36,17 @@ export default function About() {
         className="text-center mb-14"
       >
         <h1 className="text-4xl md:text-5xl font-bold">
-          About <span className="text-orange-400">Rajan Food Corner</span>
+          About{" "}
+          <span className="text-orange-400">
+            Rajan Food Corner
+          </span>
         </h1>
-        <p className="text-gray-400 mt-3 text-sm md:text-base">
+
+        <p
+          className={`mt-3 text-sm md:text-base ${
+            darkMode ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
           Authentic Indo-Chinese flavors crafted with passion ❤️
         </p>
       </motion.div>
@@ -35,16 +64,35 @@ export default function About() {
           <img
             src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?q=80&w=1200"
             alt="restaurant chef"
-            className="rounded-2xl shadow-2xl border border-white/10 h-[340px] md:h-auto object-cover group-hover:scale-105 transition duration-700"
+            className={`rounded-2xl shadow-2xl h-[340px] md:h-auto object-cover group-hover:scale-105 transition duration-700 ${
+              darkMode
+                ? "border border-white/10"
+                : "border border-black/10"
+            }`}
           />
 
           {/* Badge */}
-          <div className="absolute -bottom-3 -right-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl px-4 py-2">
-            <p className="text-orange-400 font-bold text-sm">Since 2010</p>
-            <p className="text-xs text-gray-300">Indo-Chinese Kitchen</p>
+          <div
+            className={`absolute -bottom-3 -right-3 backdrop-blur-xl rounded-xl px-4 py-2 border ${
+              darkMode
+                ? "bg-white/10 border-white/20"
+                : "bg-black/10 border-black/10"
+            }`}
+          >
+            <p className="text-orange-400 font-bold text-sm">
+              Since 2010
+            </p>
+
+            <p
+              className={`text-xs ${
+                darkMode ? "text-gray-300" : "text-gray-700"
+              }`}
+            >
+              Indo-Chinese Kitchen
+            </p>
           </div>
 
-          {/* Glow effect */}
+          {/* Glow */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-orange-500/10 blur-2xl rounded-2xl"></div>
         </motion.div>
 
@@ -59,11 +107,18 @@ export default function About() {
             Taste. Tradition. Innovation.
           </h2>
 
-          <p className="text-gray-300 mt-4 text-sm md:text-base leading-relaxed">
-            At <span className="text-orange-400 font-semibold">Rajan Food Corner</span>, 
-            we bring you the perfect blend of authentic Indo-Chinese street flavors 
-            and modern culinary techniques. Every dish is prepared with fresh ingredients, 
-            bold spices, and a passion for taste.
+          <p
+            className={`mt-4 text-sm md:text-base leading-relaxed ${
+              darkMode ? "text-gray-300" : "text-gray-700"
+            }`}
+          >
+            At{" "}
+            <span className="text-orange-400 font-semibold">
+              Rajan Food Corner
+            </span>
+            , we bring you the perfect blend of authentic Indo-Chinese street
+            flavors and modern culinary techniques. Every dish is prepared with
+            fresh ingredients, bold spices, and a passion for taste.
           </p>
 
           {/* FEATURES */}
@@ -71,30 +126,60 @@ export default function About() {
 
             <div className="flex items-center gap-3">
               <FaLeaf className="text-green-400" />
-              <span className="text-gray-300">Fresh & High-Quality Ingredients</span>
+
+              <span
+                className={
+                  darkMode ? "text-gray-300" : "text-gray-700"
+                }
+              >
+                Fresh & High-Quality Ingredients
+              </span>
             </div>
 
             <div className="flex items-center gap-3">
               <FaUtensils className="text-orange-400" />
-              <span className="text-gray-300">Expert Chefs with 10+ Years Experience</span>
+
+              <span
+                className={
+                  darkMode ? "text-gray-300" : "text-gray-700"
+                }
+              >
+                Expert Chefs with 10+ Years Experience
+              </span>
             </div>
 
             <div className="flex items-center gap-3">
               <FaStar className="text-orange-400" />
-              <span className="text-gray-300">Highly Rated (4.8★ Customer Satisfaction)</span>
+
+              <span
+                className={
+                  darkMode ? "text-gray-300" : "text-gray-700"
+                }
+              >
+                Highly Rated (4.8★ Customer Satisfaction)
+              </span>
             </div>
 
           </div>
 
           {/* CTA */}
           <div className="mt-8 flex gap-4">
-            <button className="bg-orange-500 hover:bg-orange-600 text-black px-6 py-3 rounded-full font-semibold transition">
+
+            <button onClick={scrollToMenu} className="bg-orange-500 hover:bg-orange-600 text-black px-6 py-3 rounded-full font-semibold transition">
               Explore Menu
             </button>
 
-            <button className="border border-white/20 hover:bg-white/10 px-6 py-3 rounded-full transition">
+            <button
+            onClick={scrollToContactUs}
+              className={`px-6 py-3 rounded-full border transition ${
+                darkMode
+                  ? "border-white/20 hover:bg-white/10"
+                  : "border-black/20 hover:bg-black/10"
+              }`}
+            >
               Contact Us
             </button>
+
           </div>
 
         </motion.div>
@@ -114,12 +199,21 @@ export default function About() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="bg-white/5 border border-white/10 backdrop-blur-xl rounded-xl py-5 hover:border-orange-400/40 transition"
+            className={`backdrop-blur-xl rounded-xl py-5 transition border hover:border-orange-400/40 ${
+              darkMode
+                ? "bg-white/5 border-white/10"
+                : "bg-black/5 border-black/10"
+            }`}
           >
             <h3 className="text-lg md:text-xl font-bold text-orange-400">
               {item.num}
             </h3>
-            <p className="text-gray-400 text-xs md:text-sm mt-1">
+
+            <p
+              className={`text-xs md:text-sm mt-1 ${
+                darkMode ? "text-gray-400" : "text-gray-600"
+              }`}
+            >
               {item.label}
             </p>
           </motion.div>

@@ -1,101 +1,149 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaUtensils, FaBars, FaTimes } from "react-icons/fa";
+import {
+  FaUtensils,
+  FaBars,
+  FaTimes,
+  FaMoon,
+  FaSun,
+} from "react-icons/fa";
+
 import { useStateContext } from "../Context/States";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-const {heroRef,menuRef,aboutRef,galleryRef,contactRef,testimonialsRef}=useStateContext()
+
+  const {
+    heroRef,
+    menuRef,
+    aboutRef,
+    galleryRef,
+    contactRef,
+    testimonialsRef,
+    darkMode,
+    setDarkMode,
+  } = useStateContext();
+
   const links = [
-    { name: "Home", ref:heroRef},
-    { name: "Menu", ref:menuRef},
-    { name: "About",ref:aboutRef},
-    { name: "Gallery",ref:galleryRef },
-    { name: "Contact",ref:contactRef },
-    { name: "Testimonials",ref:testimonialsRef },
+    { name: "Home", ref: heroRef },
+    { name: "Menu", ref: menuRef },
+    // { name: "Gallery", ref: galleryRef },
+    { name: "Testimonials", ref: testimonialsRef },
+    { name: "About", ref: aboutRef },
+    { name: "Contact", ref: contactRef },
   ];
 
- const scrollToSection = (ref) => {
-    ref.current?.scrollIntoView({
+  const scrollToSection = (ref) => {
+    if (open) {
+        setOpen(false);
+   
+    }
+    setTimeout(() => {
+        ref.current?.scrollIntoView({
       behavior: "smooth",
     });
-    console.log("adsf")
-    if(open){
-      setOpen(false)
-    }
+    }, 100);
+  
+
   };
+
   return (
     <header className="fixed top-0 left-0 w-full z-50">
-   
-      {/* Background */}
-      <div className="bg-black/70 backdrop-blur-xl border-b border-white/10">
+
+      {/* NAVBAR */}
+      <div
+        className={`backdrop-blur-xl border-b transition-all duration-500 ${
+          darkMode
+            ? "bg-black/70 border-white/10"
+            : "bg-white/70 border-black/10"
+        }`}
+      >
         <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
 
-          {/* LOGO */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4 }}
-            className="flex items-center gap-3 cursor-pointer"
-          >
-            <motion.div
-              whileHover={{ rotate: 12, scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className="text-orange-400 text-2xl"
-            >
-              <FaUtensils />
-            </motion.div>
+       {/* LOGO */}
+<motion.div
+  initial={{ opacity: 0, x: -20 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.4 }}
+  className="flex items-center gap-3 cursor-pointer"
+>
+  {/* Logo container */}
+  <motion.div
+    whileHover={{ rotate: 8, scale: 1.05 }}
+    transition={{ type: "spring", stiffness: 300 }}
+    className="w-11 h-11 md:w-12 md:h-12 flex items-center justify-center"
+  >
+    <img
+      src="/logo.png"
+      alt="Rajan Food Corner"
+      className="w-full h-full object-contain"
+    />
+  </motion.div>
 
-            <div className="flex flex-col leading-tight">
-              <span className="text-white font-bold text-lg tracking-wide">
-                Rajan Food Corner
-              </span>
-              <span className="text-xs tracking-[0.25em] text-orange-300 uppercase">
-                Taste That Speaks
-              </span>
-            </div>
-          </motion.div>
-<ul>
+  {/* Text */}
+  <div className="flex flex-col leading-tight">
+    <span
+      className={`font-bold text-base md:text-lg tracking-wide ${
+        darkMode ? "text-white" : "text-black"
+      }`}
+    >
+      Rajan Food Corner
+    </span>
+
+    <span className="text-[10px] md:text-xs tracking-[0.25em] text-orange-400 uppercase">
+      Taste That Speaks
+    </span>
+  </div>
+</motion.div>
+
           {/* DESKTOP LINKS */}
-          <nav className="hidden md:flex items-center gap-10 text-sm text-gray-300">
+          <ul className="hidden md:flex items-center gap-10 text-sm">
             {links.map((link, i) => (
               <motion.li
                 key={i}
-                onClick={()=>{
-                  scrollToSection(link.ref)
-                }}
-              
+                onClick={() => scrollToSection(link.ref)}
                 whileHover={{ y: -2 }}
-                className="relative group transition cursor-pointer"
+                className={`relative group transition cursor-pointer ${
+                  darkMode
+                    ? "text-gray-300"
+                    : "text-gray-700"
+                }`}
               >
                 <span className="group-hover:text-orange-400 transition">
                   {link.name}
                 </span>
 
-                {/* underline animation */}
                 <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-orange-400 group-hover:w-full transition-all duration-300"></span>
               </motion.li>
             ))}
-          </nav></ul>
+          </ul>
 
-          {/* CTA BUTTON */}
-          <motion.a
-            href="#contact"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="hidden md:block bg-orange-500 hover:bg-orange-600 text-black px-5 py-2 rounded-full font-semibold shadow-lg"
-          >
-            Order Now
-          </motion.a>
+          {/* RIGHT SIDE */}
+          <div className="flex items-center gap-4">
 
-          {/* MOBILE BUTTON */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="md:hidden text-white text-xl"
-          >
-            {open ? <FaTimes /> : <FaBars />}
-          </button>
+            {/* THEME TOGGLE */}
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className={`hidden md:flex items-center justify-center w-11 h-11 rounded-full border transition-all duration-300 ${
+                darkMode
+                  ? "bg-white/10 border-white/20 text-white"
+                  : "bg-black/10 border-black/20 text-black"
+              }`}
+            >
+              {darkMode ? <FaSun /> : <FaMoon />}
+            </button>
 
+            {/* MOBILE BUTTON */}
+            <button
+              onClick={() => setOpen(!open)}
+              className={`md:hidden text-xl ${
+                darkMode ? "text-white" : "text-black"
+              }`}
+            >
+              {open ? <FaTimes /> : <FaBars />}
+            </button>
+
+          </div>
         </div>
       </div>
 
@@ -107,33 +155,40 @@ const {heroRef,menuRef,aboutRef,galleryRef,contactRef,testimonialsRef}=useStateC
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden bg-black/95 backdrop-blur-xl overflow-hidden border-b border-white/10"
+            className={`md:hidden overflow-hidden backdrop-blur-xl border-b ${
+              darkMode
+                ? "bg-black/95 border-white/10"
+                : "bg-white/95 border-black/10"
+            }`}
           >
-            <div className="flex flex-col items-center gap-6 py-8 text-gray-300">
+            <div className="flex flex-col items-center gap-6 py-8">
 
               {links.map((link, i) => (
-                <motion.a
+                <motion.button
                   key={i}
-                
                   whileHover={{ scale: 1.1 }}
-                   onClick={()=>{
-                  scrollToSection(link.ref)
-                }}
-                  className="hover:text-orange-400 transition"
+                  onClick={() => scrollToSection(link.ref)}
+                  className={`transition ${
+                    darkMode
+                      ? "text-gray-300 hover:text-orange-400"
+                      : "text-gray-700 hover:text-orange-400"
+                  }`}
                 >
                   {link.name}
-                </motion.a>
+                </motion.button>
               ))}
-              
-
-              <motion.a
-                href="#contact"
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setOpen(false)}
-                className="bg-orange-500 text-black px-6 py-2 rounded-full font-semibold"
+              {/* MOBILE THEME BUTTON */}
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className={`flex items-center gap-2 px-6 py-2 rounded-full border transition-all ${
+                  darkMode
+                    ? "bg-white/10 border-white/20 text-white"
+                    : "bg-black/10 border-black/20 text-black"
+                }`}
               >
-                Order Now
-              </motion.a>
+                {darkMode ? <FaSun /> : <FaMoon />}
+                Theme
+              </button>
 
             </div>
           </motion.div>

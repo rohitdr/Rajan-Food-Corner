@@ -14,7 +14,7 @@ const images = [
     title: "Signature Dishes",
   },
   {
-    src: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=1200",
+    src: "https://images.pexels.com/photos/12103073/pexels-photo-12103073.jpeg",
     title: "Fresh Starters",
   },
   {
@@ -32,9 +32,17 @@ const images = [
 ];
 
 export default function Gallery() {
-  const {galleryRef}=useStateContext()
+  const { galleryRef, darkMode } = useStateContext();
+
   return (
-    <section className="min-h-screen w-full bg-black text-white py-20 px-6" ref={galleryRef}>
+    <section
+      ref={galleryRef}
+      className={`min-h-screen w-full py-20 px-6 transition-all duration-500 ${
+        darkMode
+          ? "bg-black text-white"
+          : "bg-white text-black"
+      }`}
+    >
 
       {/* HEADER */}
       <motion.div
@@ -43,9 +51,17 @@ export default function Gallery() {
         className="text-center mb-16"
       >
         <h1 className="text-5xl md:text-6xl font-bold">
-          Our <span className="text-orange-400">Gallery</span>
+          Our{" "}
+          <span className="text-orange-400">
+            Gallery
+          </span>
         </h1>
-        <p className="text-gray-400 mt-4">
+
+        <p
+          className={`mt-4 ${
+            darkMode ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
           A visual taste of our food, ambience & experience
         </p>
       </motion.div>
@@ -61,7 +77,11 @@ export default function Gallery() {
             viewport={{ once: true }}
             whileHover={{ y: -8, scale: 1.02 }}
             transition={{ duration: 0.4 }}
-            className="relative group overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-xl shadow-xl"
+            className={`relative group overflow-hidden rounded-2xl backdrop-blur-xl shadow-xl border transition-all duration-500 ${
+              darkMode
+                ? "border-white/10 bg-gradient-to-b from-white/10 to-white/5"
+                : "border-black/10 bg-gradient-to-b from-black/5 to-black/[0.02]"
+            }`}
           >
 
             {/* IMAGE */}
@@ -73,20 +93,38 @@ export default function Gallery() {
                 className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
               />
 
-              {/* DARK OVERLAY */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+              {/* OVERLAY */}
+              <div
+                className={`absolute inset-0 ${
+                  darkMode
+                    ? "bg-gradient-to-t from-black/80 via-black/20 to-transparent"
+                    : "bg-gradient-to-t from-white/80 via-white/20 to-transparent"
+                }`}
+              ></div>
             </div>
 
-            {/* TEXT OVERLAY */}
+            {/* TEXT */}
             <div className="absolute bottom-0 left-0 w-full p-4 z-10">
 
               <div className="translate-y-4 group-hover:translate-y-0 transition duration-500">
 
-                <h3 className="text-white font-semibold text-lg group-hover:text-orange-400 transition">
+                <h3
+                  className={`font-semibold text-lg transition ${
+                    darkMode
+                      ? "text-white group-hover:text-orange-400"
+                      : "text-black group-hover:text-orange-400"
+                  }`}
+                >
                   {item.title}
                 </h3>
 
-                <p className="text-gray-300 text-xs mt-1 opacity-80">
+                <p
+                  className={`text-xs mt-1 opacity-80 ${
+                    darkMode
+                      ? "text-gray-300"
+                      : "text-gray-700"
+                  }`}
+                >
                   Authentic Indo-Chinese experience
                 </p>
 
@@ -94,7 +132,7 @@ export default function Gallery() {
 
             </div>
 
-            {/* GLOW EFFECT */}
+            {/* GLOW */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-orange-500/10 blur-2xl"></div>
 
           </motion.div>

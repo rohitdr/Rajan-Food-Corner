@@ -1,5 +1,11 @@
 import { motion } from "framer-motion";
-import { FaPhoneAlt, FaMapMarkerAlt, FaClock, FaWhatsapp } from "react-icons/fa";
+import {
+  FaPhoneAlt,
+  FaMapMarkerAlt,
+  FaClock,
+  FaWhatsapp,
+} from "react-icons/fa";
+
 import { useStateContext } from "../Context/States";
 
 const fadeUp = {
@@ -16,11 +22,19 @@ const fadeUp = {
 };
 
 export default function Contact() {
-   const {contactRef}=useStateContext() 
-  return (
-    <section className="w-full bg-black text-white py-16 px-4 overflow-x-hidden" ref={contactRef}>
+  const { contactRef, darkMode } = useStateContext();
 
-      {/* BRAND HEADER */}
+  return (
+    <section
+      ref={contactRef}
+      className={`w-full py-16 px-4 overflow-x-hidden transition-all duration-500 ${
+        darkMode
+          ? "bg-black text-white"
+          : "bg-white text-black"
+      }`}
+    >
+
+      {/* HEADER */}
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -46,7 +60,9 @@ export default function Contact() {
         <motion.p
           variants={fadeUp}
           custom={2}
-          className="text-gray-400 mt-3 text-sm max-w-md mx-auto"
+          className={`mt-3 text-sm max-w-md mx-auto ${
+            darkMode ? "text-gray-400" : "text-gray-600"
+          }`}
         >
           Fresh noodles • momos • soups • rice bowls
         </motion.p>
@@ -59,14 +75,20 @@ export default function Contact() {
         viewport={{ once: true }}
         className="mt-8 flex flex-col gap-3 max-w-md mx-auto"
       >
+
         <motion.a
           variants={fadeUp}
           custom={3}
           whileTap={{ scale: 0.96 }}
           href="tel:+919888895696"
-          className="bg-white/10 hover:bg-white/20 px-5 py-3 rounded-xl flex items-center justify-center gap-2 transition"
+          className={`px-5 py-3 rounded-xl flex items-center justify-center gap-2 transition ${
+            darkMode
+              ? "bg-white/10 hover:bg-white/20"
+              : "bg-black/10 hover:bg-black/20"
+          }`}
         >
-          <FaPhoneAlt /> Call Now
+          <FaPhoneAlt />
+          Call Now
         </motion.a>
 
         <motion.a
@@ -76,60 +98,19 @@ export default function Contact() {
           href="https://wa.me/919888895696"
           className="bg-green-500 hover:bg-green-600 text-black px-5 py-3 rounded-xl flex items-center justify-center gap-2 font-semibold transition"
         >
-          <FaWhatsapp /> WhatsApp Order
+          <FaWhatsapp />
+          WhatsApp Order
         </motion.a>
+
       </motion.div>
 
-      {/* BOOKING CARD */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        whileInView={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        viewport={{ once: true }}
-        className="mt-10 max-w-md mx-auto bg-white/5 border border-white/10 rounded-2xl p-6"
-      >
-        <h2 className="text-xl font-semibold text-center mb-4">
-          Reserve Table
-        </h2>
-
-        <form className="space-y-3">
-
-          <motion.input
-            whileFocus={{ scale: 1.02 }}
-            type="text"
-            placeholder="Your Name"
-            className="w-full p-3 rounded-xl bg-black/40 border border-white/10 focus:border-orange-400 outline-none"
-          />
-
-          <motion.input
-            whileFocus={{ scale: 1.02 }}
-            type="number"
-            placeholder="Guests"
-            className="w-full p-3 rounded-xl bg-black/40 border border-white/10 focus:border-orange-400 outline-none"
-          />
-
-          <motion.input
-            whileFocus={{ scale: 1.02 }}
-            type="date"
-            className="w-full p-3 rounded-xl bg-black/40 border border-white/10 focus:border-orange-400 outline-none"
-          />
-
-          <motion.button
-            whileTap={{ scale: 0.97 }}
-            className="w-full bg-orange-500 hover:bg-orange-600 text-black font-semibold py-3 rounded-xl transition"
-          >
-            Confirm Booking
-          </motion.button>
-
-        </form>
-      </motion.div>
 
       {/* INFO CARDS */}
       <div className="mt-10 max-w-md mx-auto space-y-3">
 
         {[
           { icon: <FaPhoneAlt />, text: "+91 98888 95696" },
-          { icon: <FaMapMarkerAlt />, text: "Main Market, Punjab, India" },
+          { icon: <FaMapMarkerAlt />, text: "Garja Complex, Adarsh Nagar, Mohali, Punjab, India" },
           { icon: <FaClock />, text: "10:00 AM - 11:00 PM" },
         ].map((item, i) => (
           <motion.div
@@ -138,10 +119,19 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.1 }}
             viewport={{ once: true }}
-            className="bg-white/5 border border-white/10 rounded-xl p-4 flex gap-3 items-center"
+            className={`rounded-xl p-4 flex gap-3 items-center border transition-all duration-500 ${
+              darkMode
+                ? "bg-white/5 border-white/10"
+                : "bg-black/5 border-black/10"
+            }`}
           >
-            <span className="text-orange-400">{item.icon}</span>
-            <p className="text-sm">{item.text}</p>
+            <span className="text-orange-400">
+              {item.icon}
+            </span>
+
+            <p className="text-sm">
+              {item.text}
+            </p>
           </motion.div>
         ))}
 
@@ -152,10 +142,14 @@ export default function Contact() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="mt-10 max-w-md mx-auto rounded-2xl overflow-hidden border border-white/10"
+        className={`mt-10 max-w-md mx-auto rounded-2xl overflow-hidden border transition-all duration-500 ${
+          darkMode
+            ? "border-white/10"
+            : "border-black/10"
+        }`}
       >
         <iframe
-          src="https://www.google.com/maps?q=Main%20Market%20Punjab%20India&output=embed"
+           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d428.51593566914806!2d76.7903217579771!3d30.77100120136871!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ff28415683437%3A0x6bc101a6f052fc62!2sRajan%20Food%20Corner!5e0!3m2!1sen!2sin!4v1779450291190!5m2!1sen!2sin"
           className="w-full h-60 block"
         />
       </motion.div>

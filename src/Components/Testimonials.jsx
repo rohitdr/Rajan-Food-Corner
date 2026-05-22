@@ -3,29 +3,37 @@ import { useStateContext } from "../Context/States";
 
 const reviews = [
   {
-    name: "Rahul Sharma",
-    role: "Food Blogger",
-    text: "Yahan ka khana bahut hi zabardast hai 😍 taste, presentation aur service sab top class hai!",
-    img: "https://i.pravatar.cc/100?img=12",
+    name: "Amanpreet Singh",
+    role: "Food Lover",
+    text: "Rajan Food Corner ka Indo-Chinese food next level hai 🔥 noodles aur chilli potato ka taste bilkul restaurant style tha!",
+    img: "https://i.pravatar.cc/100?img=15",
   },
   {
-    name: "Anjali Verma",
-    role: "Customer",
-    text: "Paneer butter masala bilkul ghar jaisa laga ❤️ fresh aur spicy perfect balance tha.",
+    name: "Simran Kaur",
+    role: "Regular Customer",
+    text: "Mujhe yahan ka veg momos aur Manchurian bahut pasand aaya ❤️ fresh, spicy aur quantity bhi mast thi.",
     img: "https://i.pravatar.cc/100?img=32",
   },
   {
-    name: "Karan Mehta",
-    role: "Chef & Reviewer",
-    text: "Modern aur desi Chinese ka perfect combo hai. Highly recommended 👍",
+    name: "Meena Verma",
+    role: "Food Reviewer",
+    text: "Desi flavours ke saath Chinese dishes ka perfect fusion 😍 ambience aur service dono amazing the.",
     img: "https://i.pravatar.cc/100?img=45",
   },
 ];
 
 export default function Testimonials() {
-  const {testimonialsRef}=useStateContext()
+  const { testimonialsRef, darkMode } = useStateContext();
+
   return (
-    <section className="w-full bg-black text-white py-24 px-6" ref={testimonialsRef}>
+    <section
+      ref={testimonialsRef}
+      className={`w-full py-24 px-6 transition-all duration-500 ${
+        darkMode
+          ? "bg-black text-white"
+          : "bg-white text-black"
+      }`}
+    >
 
       {/* HEADER */}
       <motion.div
@@ -35,9 +43,17 @@ export default function Testimonials() {
         className="text-center mb-16"
       >
         <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold">
-          What Our <span className="text-orange-400">Customers Say</span>
+          What Our{" "}
+          <span className="text-orange-400">
+            Customers Say
+          </span>
         </h2>
-        <p className="text-gray-400 mt-4">
+
+        <p
+          className={`mt-4 ${
+            darkMode ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
           Real feedback from our food lovers ❤️
         </p>
       </motion.div>
@@ -53,23 +69,33 @@ export default function Testimonials() {
             whileHover={{ y: -10, scale: 1.03 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="relative group bg-white/5 border border-white/10 backdrop-blur-xl rounded-2xl p-6 shadow-xl overflow-hidden"
+            className={`relative group backdrop-blur-xl rounded-2xl p-6 shadow-xl overflow-hidden border transition-all duration-500 ${
+              darkMode
+                ? "bg-white/5 border-white/10"
+                : "bg-black/5 border-black/10"
+            }`}
           >
 
-            {/* Glow effect */}
+            {/* GLOW */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-orange-500/10 blur-2xl"></div>
 
-            {/* Stars */}
+            {/* STARS */}
             <div className="text-orange-400 text-sm mb-3">
               ⭐⭐⭐⭐⭐
             </div>
 
-            {/* Review Text */}
-            <p className="text-gray-300 text-sm leading-relaxed relative z-10">
+            {/* REVIEW */}
+            <p
+              className={`text-sm leading-relaxed relative z-10 ${
+                darkMode
+                  ? "text-gray-300"
+                  : "text-gray-700"
+              }`}
+            >
               “{item.text}”
             </p>
 
-            {/* User */}
+            {/* USER */}
             <div className="flex items-center gap-4 mt-6 relative z-10">
 
               <img
@@ -79,13 +105,30 @@ export default function Testimonials() {
               />
 
               <div>
-                <h4 className="font-semibold text-white">{item.name}</h4>
-                <p className="text-xs text-gray-400">{item.role}</p>
+                <h4
+                  className={`font-semibold ${
+                    darkMode
+                      ? "text-white"
+                      : "text-black"
+                  }`}
+                >
+                  {item.name}
+                </h4>
+
+                <p
+                  className={`text-xs ${
+                    darkMode
+                      ? "text-gray-400"
+                      : "text-gray-600"
+                  }`}
+                >
+                  {item.role}
+                </p>
               </div>
 
             </div>
 
-            {/* Bottom accent line */}
+            {/* LINE */}
             <div className="mt-5 h-[1px] w-full bg-gradient-to-r from-transparent via-orange-500/40 to-transparent"></div>
 
           </motion.div>

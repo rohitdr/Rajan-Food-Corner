@@ -3,21 +3,45 @@ import { FaUtensils, FaConciergeBell } from "react-icons/fa";
 import { useStateContext } from "../Context/States";
 
 export default function Hero() {
-  const {heroRef}=useStateContext()
+  const { heroRef, darkMode,menuRef } = useStateContext();
+
+ const scrollToMenu = () => {
+    menuRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+
+  
+  };
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-black text-white" ref={heroRef}>
+    <section
+      className={`relative h-screen w-full overflow-hidden transition-all duration-500 ${
+        darkMode
+          ? "bg-black text-white"
+          : "bg-white text-black"
+      }`}
+      ref={heroRef}
+    >
 
       {/* Background */}
       <div className="absolute inset-0">
         <img
           src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?q=80&w=1920"
           alt="restaurant"
-          className="h-full w-full object-cover opacity-40 scale-110"
+          className={`h-full w-full object-cover scale-110 transition-all duration-500 ${
+            darkMode ? "opacity-40" : "opacity-20"
+          }`}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/50" />
+
+        <div
+          className={`absolute inset-0 transition-all duration-500 ${
+            darkMode
+              ? "bg-gradient-to-r from-black/90 via-black/70 to-black/50"
+              : "bg-gradient-to-r from-white/80 via-white/60 to-white/40"
+          }`}
+        />
       </div>
 
-      {/* Branding Glow */}
+      {/* Glow */}
       <div className="absolute top-[-120px] left-[-120px] w-[350px] h-[350px] bg-orange-500/20 blur-3xl rounded-full" />
       <div className="absolute bottom-[-120px] right-[-120px] w-[350px] h-[350px] bg-red-500/20 blur-3xl rounded-full" />
 
@@ -30,15 +54,20 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 backdrop-blur-md mb-6"
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-md mb-6 border ${
+              darkMode
+                ? "bg-white/10 border-white/20"
+                : "bg-black/10 border-black/10"
+            }`}
           >
             <FaUtensils className="text-orange-400" />
-            <span className="text-sm tracking-widest uppercase text-orange-200">
+
+            <span className="text-sm tracking-widest uppercase text-orange-400">
               Rajan Food Corner
             </span>
           </motion.div>
 
-          {/* MAIN BRAND NAME */}
+          {/* HEADING */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -56,42 +85,73 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
-            className="mt-6 text-gray-300 text-lg md:text-xl"
+            className={`mt-6 text-lg md:text-xl ${
+              darkMode ? "text-gray-300" : "text-gray-700"
+            }`}
           >
             Authentic taste • Fresh ingredients • Homemade love in every bite
           </motion.p>
 
-          {/* BRAND HIGHLIGHTS */}
+          {/* HIGHLIGHTS */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="mt-6 flex flex-wrap justify-center gap-3 text-sm text-gray-300"
+            className={`mt-6 flex flex-wrap justify-center gap-3 text-sm ${
+              darkMode ? "text-gray-300" : "text-gray-700"
+            }`}
           >
-            <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">
+            <span
+              className={`px-3 py-1 rounded-full border ${
+                darkMode
+                  ? "bg-white/5 border-white/10"
+                  : "bg-black/5 border-black/10"
+              }`}
+            >
               🍽 Pure Veg & Non-Veg
             </span>
-            <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">
+
+            <span
+              className={`px-3 py-1 rounded-full border ${
+                darkMode
+                  ? "bg-white/5 border-white/10"
+                  : "bg-black/5 border-black/10"
+              }`}
+            >
               🚚 Fast Delivery
             </span>
-            <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">
+
+            <span
+              className={`px-3 py-1 rounded-full border ${
+                darkMode
+                  ? "bg-white/5 border-white/10"
+                  : "bg-black/5 border-black/10"
+              }`}
+            >
               ⭐ 4.8 Rated
             </span>
           </motion.div>
 
-          {/* CTA BUTTONS */}
+          {/* BUTTONS */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4"
+            className="mt-8 flex flex-row items-center justify-center gap-4"
           >
-            <button className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-black px-6 py-3 rounded-full font-semibold transition">
+            <a     href="https://wa.me/919888895696" className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-black px-6 py-3 rounded-full font-semibold transition">
               <FaConciergeBell />
               Order Now
-            </button>
+            </a>
 
-            <button className="px-6 py-3 rounded-full border border-white/30 hover:bg-white/10 transition">
+            <button
+            onClick={scrollToMenu}
+              className={`px-6 py-3 rounded-full border transition ${
+                darkMode
+                  ? "border-white/30 hover:bg-white/10"
+                  : "border-black/30 hover:bg-black/10"
+              }`}
+            >
               View Menu
             </button>
           </motion.div>
@@ -99,7 +159,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Floating Food Image */}
+      {/* FLOATING IMAGE */}
       <motion.img
         src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800"
         alt="food"
